@@ -1,0 +1,30 @@
+[submodule "vendor/box2d"]
+	path = vendor/box2d
+	url = https://github.com/IMAT3905/box2d.git
+	branch = master
+	update = rebase
+[submodule "vendor/enTT"]
+	path = vendor/enTT
+	url = https://github.com/skypjack/entt.git
+	branch = master
+	update = rebase
+[submodule "vendor/glm"]
+	path = vendor/glm
+	url = https://github.com/g-truc/glm.git
+	branch = master
+	update = rebase
+[submodule "vendor/STBimage"]
+	path = vendor/STBimage
+	url = https://github.com/nothings/stb.git
+	branch = master
+	update = rebase
+[submodule "vendor/glfw"]
+	path = vendor/glfw
+	url = https://github.com/IMAT3904/glfw.git
+	branch = master
+	update = rebase
+[submodule "vendor/glad"]
+	path = vendor/glad
+	url = https://github.com/IMAT3904/simplifiedGLAD.git
+	branch = master
+	update = rebase
