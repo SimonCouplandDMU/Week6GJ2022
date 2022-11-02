@@ -11,7 +11,7 @@ workspace "GLGJ"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}"
 
 project "Game"
-	location "proj"
+	location "code"
 	kind "ConsoleApp"
 	language "C++"
 	staticruntime "off"
@@ -21,12 +21,13 @@ project "Game"
 		
 	files
 	{
-		"%{prj.name}/**.h",
-		"%{prj.name}/**.cpp",
+		"code/**.h",
+		"code/**.cpp",
 	}
 
 	includedirs
 	{
+		"code/include",
 		"vendor/spdlog/include",
 		"vendor/glfw/include",
 		"vendor/Glad/include",
