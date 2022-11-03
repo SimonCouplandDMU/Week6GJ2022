@@ -38,5 +38,5 @@ public:
 		std::cout << "hit\n";
 	};
 private:
-	glm::vec4 m_colour;
+	glm::vec4 m_colour = glm::vec4(1.f);
 };
