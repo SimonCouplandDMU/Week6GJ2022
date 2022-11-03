@@ -1,21 +1,18 @@
 #include "window.h"
-#include "renderer.h"
+#include "input.h"
 #include "timer.h"
-#include <glm/gtc/matrix_transform.hpp>
+#include "renderer.h"
+#include "scene.h"
 
 int main()
 {
 	glfwInit();
 	Window window("Test Window", 1024, 800);
+	Input::setCurrentWindow(window.getNativeWindow());
+
+	Scene scene;
 
 	Renderer::init();
-	Renderer::setClearColour({ 1.f, 1.f, 1.f, 1.f });
-	Quad q1 = Quad::createCentreHalfExtents({ 4.f, 0.5f }, { 3.f, 2.f });
-	Quad q2 = Quad::createCentreHalfExtents({ 4.f, 7.f }, { 0.5f, 0.5f });
-
-	Texture letterCube("../assets/textures/letterCube.png");
-	unsigned char whitePx[3] = { 255,255,255 };
-	Texture plainWhite(1, 1, 3, whitePx, 1);
 
 	Timer timer;
 	float frameTime = 0.f;
@@ -28,11 +25,11 @@ int main()
 	while (!glfwWindowShouldClose(window.getNativeWindow()))
 	{
 		frameTime = timer.reset();
-		Renderer::clearScreen();
 
+		scene.onUpdate(frameTime);
+		
 		Renderer::begin(view, proj);
-		Renderer::drawQuad(q1, letterCube, glm::vec4(1.f));
-		Renderer::drawQuad(q2, plainWhite, glm::vec4(1.f, 0.f, 0.f, 1.f));
+		scene.onRender();
 		Renderer::end();
 		
 		window.onUpdate(frameTime);

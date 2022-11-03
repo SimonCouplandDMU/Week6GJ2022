@@ -23,6 +23,8 @@ project "Game"
 	{
 		"code/**.h",
 		"code/**.cpp",
+		"scripts/*.h",
+		"scripts/*.cpp"
 	}
 
 	includedirs
@@ -32,13 +34,16 @@ project "Game"
 		"vendor/glfw/include",
 		"vendor/Glad/include",
 		"vendor/glm/",
-		"vendor/STBimage"
+		"vendor/STBimage",
+		"vendor/enTT/single_include",
+		"vendor/box2d/include"
 	}
 	
 	links 
 	{
 		"GLFW",
-		"Glad"
+		"Glad",
+		"box2d"
 	}
 	
 	filter "system:windows"
@@ -59,4 +64,6 @@ group "Vendor"
 
 	include "vendor/glfw"
 	include "vendor/Glad"
+	include "vendor/box2d"
+	
 

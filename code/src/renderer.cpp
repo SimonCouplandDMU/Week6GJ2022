@@ -13,10 +13,10 @@ void Renderer::init()
 	s_data.shader.reset(new Shader("../assets/shaders/quad.vert", "../assets/shaders/quad.frag"));
 
 	float vertices[4 * 4] = {
-				-0.5f, -0.5f, 0.f, 0.f,
-				-0.5f,  0.5f, 0.f, 1.f,
-				 0.5f,  0.5f, 1.f, 1.f,
-				 0.5f, -0.5f, 1.f, 0.f
+				-0.5f, -0.5f, 0.f, 1.f,
+				-0.5f,  0.5f, 0.f, 0.f,
+				 0.5f,  0.5f, 1.f, 0.f,
+				 0.5f, -0.5f, 1.f, 1.f
 	};
 
 	uint32_t indices[4] = { 0,1,2,3 };
@@ -58,7 +58,7 @@ void Renderer::drawQuad(const Quad& quad, const Texture& texture, const glm::vec
 	s_data.shader->uploadInt("u_texData", 0); // Tell the shader to use texture at correct unit
 
 	// Do geomertry tranforms
-	glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.f), quad.m_translate), quad.m_scale);
+	glm::mat4 model = glm::scale(glm::rotate(glm::translate(glm::mat4(1.f), glm::vec3(quad.m_position, 0.0)),quad.m_angle, { 0.f, 0.f, 1.f }), glm::vec3(quad.m_halfExtents * 2.f, 1.f));
 	s_data.shader->uploadFloat4("u_tint", tint);
 	s_data.shader->uploadMat4("u_model", model);
 
@@ -106,12 +106,13 @@ void Renderer::disableDepthTest()
 
 
 
-Quad Quad::createCentreHalfExtents(const glm::vec2& centre, const glm::vec2& halfExtents)
+Quad Quad::createCentreHalfExtents(const glm::vec2& centre, const glm::vec2& halfExtents, float angle, bool degrees)
 {
 	Quad result;
 
-	result.m_translate = glm::vec3(centre, 0.f);
-	result.m_scale = glm::vec3(halfExtents * 2.f, 1.f);
+	result.m_position = centre;
+	result.m_halfExtents = halfExtents;
+	result.m_angle = degrees ? glm::radians(angle) : angle;
 
 	return result;
 }

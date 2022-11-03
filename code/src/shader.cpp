@@ -170,25 +170,4 @@ void Shader::compileAndLink(const char* vertexShaderSrc, const char* fragmentSha
 
 	glDetachShader(m_OpenGL_ID, vertexShader);
 	glDetachShader(m_OpenGL_ID, fragmentShader);
-
-	GLint i;
-	GLint count;
-
-	GLint size; // size of the variable
-	GLenum type; // type of the variable (float, vec3 or mat4, etc)
-
-	const GLsizei bufSize = 16; // maximum name length
-	GLchar name[bufSize]; // variable name in GLSL
-	GLsizei length; // name length
-
-	glGetProgramiv(m_OpenGL_ID, GL_ACTIVE_UNIFORMS, &count);
-	printf("Active Uniforms: %d\n", count);
-
-	for (i = 0; i < count; i++)
-	{
-		glGetActiveUniform(m_OpenGL_ID, (GLuint)i, bufSize, &length, &size, &type, name);
-
-		printf("Uniform #%d Type: %u Name: %s\n", i, type, name);
-	}
-
 }

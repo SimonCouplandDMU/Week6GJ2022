@@ -12,10 +12,11 @@ class Quad
 {
 public:
 	Quad() = default;
-	static Quad createCentreHalfExtents(const glm::vec2& centre, const glm::vec2& halfExtents);
+	static Quad createCentreHalfExtents(const glm::vec2& centre, const glm::vec2& halfExtents, float angle, bool degrees = true);
 private:
-	glm::vec3 m_translate = glm::vec3(0.f); //!< Translation vector
-	glm::vec3 m_scale = glm::vec3(1.f); //!< Scale vector
+	glm::vec2 m_position;
+	glm::vec2 m_halfExtents;
+	float m_angle;
 	friend class Renderer;
 };
 
