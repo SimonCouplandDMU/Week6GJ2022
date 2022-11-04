@@ -1,6 +1,7 @@
 #include "scene.h"
 
 #include "scripts/simpleController.h"
+#include "scripts/camController.h"
 
 entt::registry Scene::m_registry;
 std::shared_ptr<b2World> Scene::m_physicsWorld = nullptr;
@@ -33,8 +34,11 @@ Scene::Scene()
 	m_registry.get<NativeScriptComponent>(m_fallingBlock).create<SimpleController>(m_fallingBlock);
 
 	m_camera = m_registry.create();
-	m_registry.emplace<TransformComponent>(m_camera, glm::vec2(5.12f,2.f), glm::vec2(0.f, 0.0f), 0.f); // Add a transform to the block
-	m_registry.emplace<CameraComponent>(m_camera, m_registry.get<TransformComponent>(m_camera));
+	m_registry.emplace<TransformComponent>(m_camera, glm::vec2(5.12f,4.f), glm::vec2(5.12f, 4.f), 0.f); // Add a transform to the block
+	m_registry.emplace<CameraComponent>(m_camera, m_camera);
+	m_registry.emplace<CameraControllerComponent>(m_camera);
+	m_registry.emplace<NativeScriptComponent>(m_camera);
+	m_registry.get<NativeScriptComponent>(m_camera).create<CamController>(m_camera);
 }
 
 
@@ -73,6 +77,8 @@ void Scene::onUpdate(float timeStep)
 
 void Scene::onRender()
 {
+	auto& cam = m_registry.get<CameraComponent>(m_camera);
+	Renderer::begin(cam.view, cam.proj);
 	Renderer::clearScreen();
 
 	auto& renderView = m_registry.view<TransformComponent, RenderComponent>();
@@ -84,4 +90,6 @@ void Scene::onRender()
 
 		Renderer::drawQuad(Quad::createCentreHalfExtents(transform.position, transform.halfExtents, transform.angle, false), *render.texture, render.tint);
 	}
+
+	Renderer::end();
 }

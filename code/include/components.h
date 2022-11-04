@@ -36,22 +36,22 @@ struct RenderComponent
 
 struct CameraComponent
 {
-	CameraComponent(const TransformComponent& transform) 
-	{ 
-		proj = glm::ortho(0.f, transform.halfExtents.x * 2.f, 0.f, transform.halfExtents.y * 2.f);
-		onUpdate(0.f, transform);
-	}
+	CameraComponent(entt::entity e);
+	void onUpdate(float timestep);
+
 	glm::mat4 view = glm::inverse(glm::mat4(1.f));
 	glm::mat4 proj = glm::mat4(1.f);
+	entt::entity entity;
+};
 
-	void onUpdate(float timestep, const TransformComponent& transform)
-	{
-		glm::mat4 t = glm::translate(glm::mat4(1.f), glm::vec3(transform.position,0.f));
-		glm::mat4 r = glm::rotate(glm::mat4(1.f), transform.angle, glm::vec3(0.f, 0.f, 1.f));
-		glm::mat4 transformMatrix = t * r;
-
-		view = glm::inverse(transformMatrix);
-	};
+struct CameraControllerComponent
+{
+	CameraControllerComponent() {}
+	CameraControllerComponent(const glm::vec2& speed, float rotationSpeed, float zoom) 
+		: linearSpeed(speed), angularSpeed(rotationSpeed), zoomSpeed(zoom) {}
+	glm::vec2 linearSpeed = glm::vec2(1.f, 1.f);
+	float angularSpeed = 0.1f;
+	float zoomSpeed = 1.1f;
 };
 
 struct CollisionData
