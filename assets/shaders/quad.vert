@@ -8,10 +8,11 @@ out vec2 texCoord;
 uniform mat4 u_model;
 uniform mat4 u_view;
 uniform mat4 u_projection;
+uniform mat4 u_world;
 
 void main()
 {
 	texCoord = a_texCoord;
-	gl_Position =  u_projection * u_view * u_model * vec4(a_vertexPosition,1.0,1.0);
+	gl_Position =  u_projection * u_view * u_world * u_model * vec4(a_vertexPosition,1.0,1.0);
 }
 

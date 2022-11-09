@@ -37,11 +37,12 @@ void Renderer::init()
 	IBO->unbind();
 }
 
-void Renderer::begin(const glm::mat4& view, const glm::mat4& projection)
+void Renderer::begin(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& world)
 {
 	s_data.shader->use();
 	s_data.shader->uploadMat4("u_view", view);
 	s_data.shader->uploadMat4("u_projection", projection);
+	s_data.shader->uploadMat4("u_world", world);
 
 	s_data.VAO->bind();
 }

@@ -34,7 +34,7 @@ public:
 	static void enableDepthTest();
 	static void disableDepthTest();
 	// Draw command
-	static void begin(const glm::mat4& view, const glm::mat4& projection);
+	static void begin(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& world);
 	static void end();
 	static void drawQuad(const Quad& quad, const Texture& texture, const glm::vec4& tint);
 private:

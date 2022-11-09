@@ -10,11 +10,12 @@
 
 struct TransformComponent
 {
-	TransformComponent(const glm::vec2& p_halfExtents, const glm::vec2& p_position, float p_angle)
+	TransformComponent(const glm::vec2& p_halfExtents, const glm::vec2& p_position, float p_angle, bool degrees = true)
 	{
 		halfExtents = p_halfExtents;
 		position = p_position;
-		angle = glm::radians(p_angle);
+		if (degrees) angle = glm::radians(p_angle);
+		else angle = p_angle;
 	}
 
 	glm::vec2 position;
@@ -151,6 +152,17 @@ struct BoxColliderComponent
 	glm::vec2 offset = glm::vec2(0.F);
 };
 
+struct CircleColliderComponent
+{
+	CircleColliderComponent(entt::entity entity, float radius, const PhysicsMaterial& material = PhysicsMaterial())
+		: CircleColliderComponent(entity, radius, glm::vec2(0.f, 0.f), material) {}
+
+	CircleColliderComponent(entt::entity entity, float p_radius, const glm::vec2& p_offset, const PhysicsMaterial& material = PhysicsMaterial());
+	float radius;
+	glm::vec2 offset = glm::vec2(0.f);
+	b2Fixture* collider;
+};
+
 struct ColliderGroupComponent
 {
 	ColliderGroupComponent(entt::entity entity, const PhysicsMaterial& material = PhysicsMaterial())
@@ -176,6 +188,8 @@ struct ColliderGroupComponent
 	
 	std::vector<BoxColliderComponent> boxColliders;
 };
+
+
 
 class CollisionListener : public b2ContactListener
 {

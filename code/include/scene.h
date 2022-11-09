@@ -23,10 +23,17 @@ private:
 
 	// Some entities, thse could also go in a vector or array
 	entt::entity m_camera; 
-	entt::entity m_texturedBlock;
-	entt::entity m_fallingBlock;
+	entt::entity m_character;
+	entt::entity m_middle;
+	std::vector<entt::entity> m_circleEntities;
 
 	// Some textures
 	std::shared_ptr<Texture> plainWhiteTexture;
 	std::shared_ptr<Texture> letterCubeTexture;
+	std::shared_ptr<Texture> moonTexture;
+
+
+
+	float m_angle = 0.f;
+	float m_rotationSpeed = glm::half_pi<float>() * -0.125;
 };

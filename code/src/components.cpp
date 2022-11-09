@@ -101,3 +101,24 @@ BoxColliderComponent::BoxColliderComponent(entt::entity entity, const glm::vec2&
 }
 
 CollisionListener::CollisionListener() : m_registry(Scene::getRegistry()) {}
+
+CircleColliderComponent::CircleColliderComponent(entt::entity entity, float p_radius, const glm::vec2& p_offset, const PhysicsMaterial& material)
+	: radius(p_radius), offset(p_offset)
+{
+	entt::registry& registry = Scene::getRegistry();
+	auto& rbc = registry.get<RigidBodyComponent>(entity);
+
+	b2FixtureDef fixtureDef;
+	b2CircleShape circle;
+	circle.m_radius = p_radius;
+	circle.m_p.Set(p_offset.x, p_offset.y);
+	fixtureDef.shape = &circle;
+
+	fixtureDef.density = material.density;
+	fixtureDef.restitution = material.restitution;
+	fixtureDef.friction = material.friction;
+	fixtureDef.isSensor = material.isSensor;
+
+	collider = rbc.body->CreateFixture(&fixtureDef);
+
+}
